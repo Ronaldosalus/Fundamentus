@@ -1,16 +1,17 @@
-# versão 1.0 - 30-9-25
+# versão 1.1 - 30-9-25
 
 import pandas as pd
 import requests
 import streamlit as st
 import yfinance as yf
+from api_key import api_key
 
-API_KEY = 'rIoD1zfyFHIaP2vbsdU21ddkeGBPTKOv'
-url = f"https://financialmodelingprep.com/api/v3/stock-screener?exchange=NASDAQ&limit=50&apikey={API_KEY}"
+
+url = f"https://financialmodelingprep.com/api/v3/stock-screener?exchange=NASDAQ&limit=50&apikey={api_key}"
 data = requests.get(url).json()
-url_nyse = f"https://financialmodelingprep.com/api/v3/stock-screener?exchange=NYSE&limit=50&apikey={API_KEY}"
+url_nyse = f"https://financialmodelingprep.com/api/v3/stock-screener?exchange=NYSE&limit=50&apikey={api_key}"
 data_nyse = requests.get(url_nyse).json()
-url = f"https://financialmodelingprep.com/api/v3/stock-screener?exchange=NYSE&limit=50&apikey={API_KEY}"
+url = f"https://financialmodelingprep.com/api/v3/stock-screener?exchange=NYSE&limit=50&apikey={api_key}"
 
 
 
@@ -20,7 +21,7 @@ for acao in data:
     nome = acao['companyName']
     
 
-    r = requests.get(f"https://financialmodelingprep.com/api/v3/ratios/{ticker}?apikey={API_KEY}")
+    r = requests.get(f"https://financialmodelingprep.com/api/v3/ratios/{ticker}?apikey={api_key}")
     ratios = r.json()
     if not ratios: 
         continue
@@ -46,7 +47,7 @@ for acao in data_nyse:
     nome = acao['companyName']
     
 
-    r = requests.get(f"https://financialmodelingprep.com/api/v3/ratios/{ticker}?apikey={API_KEY}")
+    r = requests.get(f"https://financialmodelingprep.com/api/v3/ratios/{ticker}?apikey={api_key}")
     ratios = r.json()
     if not ratios: 
         continue
@@ -66,14 +67,14 @@ for acao in data_nyse:
         "Patrim.Liq": acao.get("marketCap")
     })
 
-sp500 = requests.get(f"https://financialmodelingprep.com/api/v3/sp500_constituent?apikey={API_KEY}").json()
+sp500 = requests.get(f"https://financialmodelingprep.com/api/v3/sp500_constituent?apikey={api_key}").json()
 
 linhas_sp500 = []
 for acao in sp500:
     ticker = acao['symbol']
     nome = acao['name']  # no sp500_constituent o campo é "name"
 
-    r = requests.get(f"https://financialmodelingprep.com/api/v3/ratios/{ticker}?apikey={API_KEY}")
+    r = requests.get(f"https://financialmodelingprep.com/api/v3/ratios/{ticker}?apikey={api_key}")
     ratios = r.json()
     if not ratios:
         continue
